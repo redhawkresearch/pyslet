@@ -1172,7 +1172,11 @@ class BooleanValue(SimpleValue):
         elif isinstance(new_value, bool):
             self.value = new_value
         else:
-            raise TypeError("Can't set Boolean from %s" % str(new_value))
+            # This is a hack to support numpy bools, which don't satisfy the above
+            # isinstance call
+            self.value = bool(new_value)
+        #else:
+        #    raise TypeError("Can't set Boolean from %s" % str(new_value))
 
 
 class NumericValue(SimpleValue):
